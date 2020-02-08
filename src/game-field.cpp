@@ -3,8 +3,8 @@
 
 GameField::GameField()
 {
-	for (int i = 0; i < 10; i++) {
-		strcpy(field[i], "..........");
+	for (int y = 0; y < 10; y++) {
+		strcpy(field[y], "..........");
 	}
 }
 
@@ -13,11 +13,11 @@ void GameField::addShip(int numberOfDecks, int sx, int sy, Direction dir)
 	int dx[] = {-1, 1, 0, 0};
 	int dy[] = {0, 0, -1, 1};
 	for (int i = 0; i < numberOfDecks; i++) {
-		field[sx + dx[dir] * i][sy + dy[dir] * i] = '#';
+		field[sy + dy[dir] * i][sx + dx[dir] * i] = '#';
 	}
 }
 
-void GameField::isDeckOfShip(int x, int y)
+bool GameField::isDeckOfShip(int x, int y)
 {
-	return field[x][y] == '#';
+	return field[y][x] == '#';
 }

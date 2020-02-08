@@ -5,9 +5,9 @@ enum Direction {
 };
 
 class GameField {
-	char field[12][12];
 public:
+	char field[12][12];
 	GameField();
 	void addShip(int numberOfDecks, int sx, int sy, Direction dir);
-	void isDeckOfShip(int x, int y);
+	bool isDeckOfShip(int x, int y);
 };

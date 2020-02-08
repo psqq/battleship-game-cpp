@@ -3,7 +3,8 @@
 #include "game-field.h"
 
 class Game {
-	GameField playerField, aiField;
 public:
+	GameField playerField, aiField;
+	Game();
 	void startNewGame();
 };
