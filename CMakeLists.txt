@@ -14,14 +14,14 @@ find_package(SDL2_ttf REQUIRED)
 #add_executable (battleship-game-original "./src/original/main.cpp")
 
 file(GLOB SRC_FILES ${PROJECT_SOURCE_DIR}/src/*.cpp)
-message("src: ${SRC_FILES}")
+file(GLOB SDL2_VERSION_SRC_FILES ${PROJECT_SOURCE_DIR}/src/sdl2/*.cpp)
 
 set(BATTLESHIP_GAME_SDL_BIN "battleship-game-sdl")
 include_directories(${SDL2_INCLUDE_DIR} ${SDL2_TTF_INCLUDE_DIRS})
 IF (WIN32)
-    add_executable (${BATTLESHIP_GAME_SDL_BIN} "./src/sdl2/main.cpp;${SRC_FILES}" )
+    add_executable (${BATTLESHIP_GAME_SDL_BIN} "./src/sdl2/main.cpp;${SRC_FILES};${SDL2_VERSION_SRC_FILES}" )
 ELSE()
-    add_executable (${BATTLESHIP_GAME_SDL_BIN} "./src/sdl2/main.cpp;${SRC_FILES}")
+    add_executable (${BATTLESHIP_GAME_SDL_BIN} "./src/sdl2/main.cpp;${SRC_FILES};${SDL2_VERSION_SRC_FILES}")
 ENDIF()
 target_link_libraries(${BATTLESHIP_GAME_SDL_BIN} ${SDL2_LIBRARY} ${SDL2_SDLMAIN_LIBRARY} ${SDL2_TTF_LIBRARIES})
 
