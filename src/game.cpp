@@ -1,0 +1,4 @@
+
+void Game::startNewGame()
+{
+}
