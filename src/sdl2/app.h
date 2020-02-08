@@ -5,16 +5,19 @@
 #include "../game.h"
 #include "../game-field.h"
 
+class DrawContext;
+
+
 class App {
 	SDL_Renderer* renderer;
 	TTF_Font* font;
 	SDL_Window* window;
 	Game game;
 public:
+	friend DrawContext;
 	App();
 	void clear();
 	void init();
 	void run();
-	SDL_Surface* makeTextSurface(char* text, SDL_Color color);
-	SDL_Rect drawText(char* text, SDL_Color color, int x, int y);
+	DrawContext getDrawContext();
 };

@@ -7,4 +7,6 @@ Game::Game()
 
 void Game::startNewGame()
 {
+	playerField = GameField();
+	aiField = GameField();
 }

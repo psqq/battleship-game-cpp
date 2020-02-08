@@ -1,5 +1,7 @@
 ﻿cmake_minimum_required (VERSION 3.8)
 
+set(ENV(LANG) "ru_RU.utf-8")
+
 project ("battleship-game")
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")

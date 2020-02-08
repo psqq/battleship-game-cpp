@@ -1,11 +1,15 @@
 #include "app.h"
+#include "draw-context.h"
+#include "grid-of-chars.h"
 
 App::App() 
     : font(nullptr), window(nullptr), renderer(nullptr)
 {}
 
 void App::clear() {
+    SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
+    TTF_Quit();
     SDL_Quit();
 }
 
@@ -37,6 +41,7 @@ void App::init() {
 }
 
 void App::run() {
+    GridOfChars grid(5, 5, '#');
     while (true)
     {
         SDL_Event event;
@@ -49,36 +54,13 @@ void App::run() {
         }
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
         SDL_RenderClear(renderer);
-        drawText("Hello, World!", SDL_Color{255, 0, 255}, 0, 0);
+        getDrawContext().drawText("Hello, World!", SDL_Color{255, 0, 255}, 0, 0);
+        grid.draw(getDrawContext(), 50, 50);
         SDL_RenderPresent(renderer);
     }
 }
 
-SDL_Surface* App::makeTextSurface(char* text, SDL_Color color) {
-    if (!font) {
-        throw "No font for make text surface.";
-    }
-    SDL_Surface* surfaceMessage = TTF_RenderText_Blended(font, text, color);
-    if (!surfaceMessage) {
-        throw "Surface message creation failed";
-    }
-    return surfaceMessage;
-}
-
-SDL_Rect App::drawText(char* text, SDL_Color color, int x, int y) {
-    SDL_Surface* surfaceMessage = makeTextSurface(text, color);
-    SDL_Texture* Message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
-
-    SDL_Rect Message_rect;
-    Message_rect.x = x;
-    Message_rect.y = y;
-    Message_rect.w = surfaceMessage->w;
-    Message_rect.h = surfaceMessage->h;
-
-    SDL_RenderCopy(renderer, Message, NULL, &Message_rect);
-
-    SDL_FreeSurface(surfaceMessage);
-    SDL_DestroyTexture(Message);
-
-    return Message_rect;
+DrawContext App::getDrawContext()
+{
+    return DrawContext(this);
 }
