@@ -13,7 +13,7 @@ GridOfChars::GridOfChars(int _w, int _h, char fillCh)
 
 GridOfChars::~GridOfChars()
 {
-	clear();
+	free();
 }
 
 void GridOfChars::setChar(int x, int y, char ch)
@@ -21,7 +21,7 @@ void GridOfChars::setChar(int x, int y, char ch)
 	chars[y][x] = ch;
 }
 
-void GridOfChars::clear()
+void GridOfChars::free()
 {
 	for (int y = 0; y < h; y++) {
 		for (int x = 0; x < w; x++) {

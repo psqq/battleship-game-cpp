@@ -6,7 +6,7 @@ App::App()
     : font(nullptr), window(nullptr), renderer(nullptr)
 {}
 
-void App::clear() {
+void App::free() {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     TTF_Quit();

@@ -23,6 +23,6 @@ int main(int argc, char* argv[])
 			std::cerr << "SDL Error Message: " << sdlErrMsg << std::endl;
 		}
 	}
-	app.clear();
+	app.free();
 	return return_code;
 }

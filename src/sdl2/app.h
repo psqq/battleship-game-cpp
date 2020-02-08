@@ -16,7 +16,7 @@ class App {
 public:
 	friend DrawContext;
 	App();
-	void clear();
+	void free();
 	void init();
 	void run();
 	DrawContext getDrawContext();
