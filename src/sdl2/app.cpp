@@ -3,7 +3,12 @@
 #include "grid-of-chars.h"
 
 App::App() 
-    : font(nullptr), window(nullptr), renderer(nullptr)
+    : font(nullptr)
+    , window(nullptr)
+    , renderer(nullptr)
+    , screen(nullptr)
+    , game()
+    , fieldMakerScreen(this, game.playerField)
 {}
 
 void App::free() {
@@ -38,15 +43,17 @@ void App::init() {
     if (!renderer) {
         throw "Renderer creation failed";
     }
+
+    setScreen(&fieldMakerScreen);
 }
 
 void App::run() {
-    GridOfChars grid(5, 5, '#');
     while (true)
     {
         SDL_Event event;
         if (SDL_PollEvent(&event))
         {
+            screen->onEvent(event);
             if (event.type == SDL_QUIT)
             {
                 break;
@@ -54,10 +61,15 @@ void App::run() {
         }
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
         SDL_RenderClear(renderer);
-        getDrawContext().drawText("Hello, World!", SDL_Color{255, 0, 255}, 0, 0);
-        grid.draw(getDrawContext(), 50, 50);
+        screen->update();
+        screen->draw();
         SDL_RenderPresent(renderer);
     }
+}
+
+void App::setScreen(Screen* _screen)
+{
+    screen = _screen;
 }
 
 DrawContext App::getDrawContext()

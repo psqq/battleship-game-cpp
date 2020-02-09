@@ -7,6 +7,7 @@
 
 class GridOfChars {
 	int w, h;
+	SDL_Rect viewRect;
 	int cellSize = 0;
 	std::vector<std::vector<char>> chars;
 	std::vector<std::vector<char>> renderedChars;
@@ -19,4 +20,5 @@ public:
 	void setChar(int x, int y, char ch);
 	void free();
 	void draw(DrawContext dc, int x, int y);
+	SDL_Rect getViewRect();
 };

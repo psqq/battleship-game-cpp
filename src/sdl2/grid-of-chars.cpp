@@ -43,11 +43,15 @@ void GridOfChars::draw(DrawContext dc, int sx, int sy)
 	int maxW = 0, maxH = 0;
 	for (int y = 0; y < h; y++) {
 		for (int x = 0; x < w; x++) {
-			maxW = std::max(maxW, surfaces[y][x]->w);
-			maxH = std::max(maxH, surfaces[y][x]->h);
+			maxW = std::max(maxW, surfaces[y][x] ? surfaces[y][x]->w : 0);
+			maxH = std::max(maxH, surfaces[y][x] ? surfaces[y][x]->h : 0);
 		}
 	}
-	int cellSize = std::max(maxW, maxH);
+	cellSize = std::max(maxW, maxH);
+	viewRect.x = sx;
+	viewRect.y = sy;
+	viewRect.w = cellSize * w;
+	viewRect.h = cellSize * h;
 	SDL_SetRenderDrawColor(dc.renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
 	for (int y = 0; y <= h; y++) {
 		SDL_RenderDrawLine(dc.renderer, sx, sy + cellSize*y, sx + cellSize * w, sy + cellSize * y);
@@ -68,12 +72,17 @@ void GridOfChars::draw(DrawContext dc, int sx, int sy)
 	}
 }
 
+SDL_Rect GridOfChars::getViewRect()
+{
+	return viewRect;
+}
+
 void GridOfChars::makeSurfaces(DrawContext dc)
 {
 	for (int y = 0; y < h; y++) {
 		for (int x = 0; x < w; x++) {
 			char buf[] = { chars[y][x], '\0' };
-			if (renderedChars[y][x] == buf[0]) {
+			if (renderedChars[y][x] == chars[y][x]) {
 				continue;
 			}
 			if (surfaces[y][x]) {
@@ -86,7 +95,7 @@ void GridOfChars::makeSurfaces(DrawContext dc)
 			}
 			surfaces[y][x] = dc.makeTextSurface(buf, SDL_Color{ 255, 255,255 });
 			textures[y][x] = dc.createTextureFromSurface(surfaces[y][x]);
-			renderedChars[y][x] = buf[0];
+			renderedChars[y][x] = chars[y][x];
 		}
 	}
 }
